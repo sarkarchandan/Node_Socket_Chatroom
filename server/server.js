@@ -3,6 +3,7 @@ const publicPath = path.join(__dirname, "../public");
 const http = require("http");
 const express = require("express");
 const socketIO = require("socket.io");
+const {createMessage} = require("./utilities/message");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,21 +18,17 @@ app.use(express.static(publicPath));
 io.on("connection", (socket) => {
   console.log("Connected to client.");
 
-  socket.emit("welcomeMessage",{
-    from: "Admin",
-    text: "Welcome to chatroom"
-  });
+  socket.emit("welcomeMessage",createMessage("Admin", "Welcome to Chatroom"));
 
-  socket.broadcast.emit("newMessage", {
-    from: "Admin",
-    text: "New User Joined in Chatroom"
-  });
+  socket.broadcast.emit("newMessage", createMessage("Admin", "New user joined in chatroom"));
 
-  socket.on("createMessage", (createdMessage) => {
+  socket.on("createMessage", (message) => {
     console.log(`New created by client client on: ${new Date()}`);
-    console.log(createdMessage);
-  });
+    console.log(message);
 
+    socket.broadcast.emit("newMessage", createMessage(message.from,message.text
+    ));
+  });
 
   socket.on("disconnect", () => {
     console.log("Disconnected from client");

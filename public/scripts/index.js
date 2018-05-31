@@ -10,16 +10,10 @@ socket.on("welcomeMessage", function (welcomeMessage) {
   console.log(`${welcomeMessage.text}: ${welcomeMessage.from}`);
 });
 
-// socket.emit("createMessage", {
-//   from: "vic@battle.com",
-//   to: "alex@origin.com",
-//   text: "Should we play ?"
-// });
-
 socket.on("newMessage", function(newMessage) {
   console.log("New Message received from server");
   console.log(newMessage);
-})
+});
 
 socket.on("disconnect", function () {
   console.log("Disconnected from server.");

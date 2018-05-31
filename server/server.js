@@ -18,6 +18,18 @@ app.use(express.static(publicPath));
 io.on("connection", (socket) => {
   console.log("Connected to client.");
 
+  //Firing the event from server.
+  socket.emit("newEmail",
+  {
+    from: "mike@example.com",
+    text: "Whats Up",
+    createdAt: 123
+   });
+
+   socket.on("createEmail", (createdEmail) => {
+     console.log(`Created Email: text: ${createdEmail.text} to: ${createdEmail.to}`);
+   });
+
   //Handling disconnection from client.
   socket.on("disconnect", () => {
     console.log("Disconnected from client");

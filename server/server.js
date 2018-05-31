@@ -20,14 +20,23 @@ io.on("connection", (socket) => {
   socket.on("createMessage", (createdMessage) => {
     console.log(`New created by client client on: ${new Date()}`);
     console.log(createdMessage);
+
+    console.log("Broadcasting Message...");
+    io.emit("newMessage", {
+      from: createdMessage.from,
+      to: createdMessage.to,
+      text: createdMessage.text,
+      createdAt: new Date().getTime()
+    });
   });
 
-  socket.emit("newMessage", {
-    from: "alex@origin.com",
-    to: "vic@battle.com",
-    text: "Yes we should !!",
-    createdAt: new Date()
-  });
+  // socket.emit("newMessage", {
+  //   from: "alex@origin.com",
+  //   to: "vic@battle.com",
+  //   text: "Yes we should !!",
+  //   createdAt: new Date()
+  // });
+
 
   socket.on("disconnect", () => {
     console.log("Disconnected from client");

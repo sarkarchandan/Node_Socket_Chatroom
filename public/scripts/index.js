@@ -6,11 +6,11 @@ socket.on("connect", function () {
   console.log("Connected to server.");
 });
 
-socket.emit("createMessage", {
-  from: "vic@battle.com",
-  to: "alex@origin.com",
-  text: "Should we play ?"
-});
+// socket.emit("createMessage", {
+//   from: "vic@battle.com",
+//   to: "alex@origin.com",
+//   text: "Should we play ?"
+// });
 
 socket.on("newMessage", function(newMessage) {
   console.log("New Message received from server");

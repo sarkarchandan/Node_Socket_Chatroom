@@ -6,6 +6,10 @@ socket.on("connect", function () {
   console.log("Connected to server.");
 });
 
+socket.on("welcomeMessage", function (welcomeMessage) {
+  console.log(`${welcomeMessage.text}: ${welcomeMessage.from}`);
+});
+
 // socket.emit("createMessage", {
 //   from: "vic@battle.com",
 //   to: "alex@origin.com",

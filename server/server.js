@@ -17,25 +17,20 @@ app.use(express.static(publicPath));
 io.on("connection", (socket) => {
   console.log("Connected to client.");
 
+  socket.emit("welcomeMessage",{
+    from: "Admin",
+    text: "Welcome to chatroom"
+  });
+
+  socket.broadcast.emit("newMessage", {
+    from: "Admin",
+    text: "New User Joined in Chatroom"
+  });
+
   socket.on("createMessage", (createdMessage) => {
     console.log(`New created by client client on: ${new Date()}`);
     console.log(createdMessage);
-
-    console.log("Broadcasting Message...");
-    io.emit("newMessage", {
-      from: createdMessage.from,
-      to: createdMessage.to,
-      text: createdMessage.text,
-      createdAt: new Date().getTime()
-    });
   });
-
-  // socket.emit("newMessage", {
-  //   from: "alex@origin.com",
-  //   to: "vic@battle.com",
-  //   text: "Yes we should !!",
-  //   createdAt: new Date()
-  // });
 
 
   socket.on("disconnect", () => {

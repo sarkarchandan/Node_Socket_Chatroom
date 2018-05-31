@@ -20,14 +20,15 @@ io.on("connection", (socket) => {
 
   socket.emit("welcomeMessage",createMessage("Admin", "Welcome to Chatroom"));
 
-  socket.broadcast.emit("newMessage", createMessage("Admin", "New user joined in chatroom"));
+  socket.broadcast.emit("newUserNotification", createMessage("Admin", "New user joined in chatroom"));
 
-  socket.on("createMessage", (message) => {
+  socket.on("createMessage", (message, onReceive) => {
     console.log(`New created by client client on: ${new Date()}`);
     console.log(message);
 
-    socket.broadcast.emit("newMessage", createMessage(message.from,message.text
+    io.emit("newMessage", createMessage(message.from,message.text
     ));
+    onReceive("Got it: Server");
   });
 
   socket.on("disconnect", () => {

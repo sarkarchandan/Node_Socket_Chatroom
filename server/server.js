@@ -14,23 +14,21 @@ app.use(express.static(publicPath));
 
 //Regsiter an EventListener and do something when the event takes place.
 
-//Handling connection with the client.
 io.on("connection", (socket) => {
   console.log("Connected to client.");
 
-  //Firing the event from server.
-  socket.emit("newEmail",
-  {
-    from: "mike@example.com",
-    text: "Whats Up",
-    createdAt: 123
-   });
+  socket.on("createMessage", (createdMessage) => {
+    console.log(`New created by client client on: ${new Date()}`);
+    console.log(createdMessage);
+  });
 
-   socket.on("createEmail", (createdEmail) => {
-     console.log(`Created Email: text: ${createdEmail.text} to: ${createdEmail.to}`);
-   });
+  socket.emit("newMessage", {
+    from: "alex@origin.com",
+    to: "vic@battle.com",
+    text: "Yes we should !!",
+    createdAt: new Date()
+  });
 
-  //Handling disconnection from client.
   socket.on("disconnect", () => {
     console.log("Disconnected from client");
   });

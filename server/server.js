@@ -3,7 +3,7 @@ const publicPath = path.join(__dirname, "../public");
 const http = require("http");
 const express = require("express");
 const socketIO = require("socket.io");
-const {createMessage} = require("./utilities/message");
+const {createMessage,createLocationMessage} = require("./utilities/message");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -31,6 +31,10 @@ io.on("connection", (socket) => {
     onReceive("Got it: Server");
   });
 
+  socket.on("createLocationMessage", (coords) => {
+    io.emit("newLocationMessage", createLocationMessage("Admin",coords.latitude, coords.longitude));
+  });
+
   socket.on("disconnect", () => {
     console.log("Disconnected from client");
   });
@@ -41,6 +45,5 @@ if(!module.parent) {
     console.log(`Server started listenning to port: ${port}`);
   });
 }
-
 
 

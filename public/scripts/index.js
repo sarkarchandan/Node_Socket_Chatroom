@@ -20,7 +20,7 @@ socket.on("newUserNotification", function(newUserMessage) {
 socket.on("newMessage", function(newMessage) {
   console.log("New Message received from server");
   const li = jQuery("<li></li>");
-  li.text(`${newMessage.from} : ${newMessage.text}`);
+  li.text(`${moment(newMessage.createdAt).format("dddd, MMM Do,YYYY - h:mm a")} : ${newMessage.from} : ${newMessage.text}`);
 
   jQuery("#messages").append(li);
 });
@@ -28,7 +28,7 @@ socket.on("newMessage", function(newMessage) {
 socket.on("newLocationMessage", function(locationMessage) {
   const li = jQuery("<li></li>");
   const link = jQuery("<a target='_blank'>My Current Location</a>")
-  li.text(`${locationMessage.from}: `);
+  li.text(`${locationMessage.from}: ${moment(locationMessage.createdAt).format("dddd, MMM Do,YYYY - h:mm a")}: `);
   link.attr("href", locationMessage.url);
   li.append(link);
   jQuery("#messages").append(li);

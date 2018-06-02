@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
     console.log(`New created by client client on: ${new Date()}`);
     console.log(message);
 
-    io.emit("newMessage", createMessage(message.from,message.text
+    io.emit("newMessage", createMessage("User",message.text
     ));
     onReceive("Got it: Server");
   });
